@@ -25,16 +25,16 @@ public class DossierDAOImpl implements DossierDAO {
 
             var mapper = new XmlMapper();
             var xmlString = new String(fileInputStream.readAllBytes());
-            var users = mapper.readValue(xmlString, DossierWrapper.class).getDossiers();
+            var dossiers = mapper.readValue(xmlString, DossierWrapper.class).getDossiers();
 
             var criteriaMap = criteria.getCriteriaMap();
             var result = new ArrayList<Dossier>();
 
             if (criteriaMap.isEmpty()) {
-                return users;
+                return dossiers;
             } else {
                 criteriaMap.forEach((key, value) -> result.addAll(
-                    users.stream().filter(p -> {
+                    dossiers.stream().filter(p -> {
                         try {
                             var field = p.getClass().getDeclaredField(key);
                             field.setAccessible(true);
@@ -51,8 +51,9 @@ public class DossierDAOImpl implements DossierDAO {
         }
     }
 
+    @Override
     public void save(Dossier dossier) throws DAOException {
-        try (var fileOutputStream = new FileOutputStream(PATH);) {
+        try (var fileOutputStream = new FileOutputStream(PATH)) {
             var mapper = new XmlMapper();
             var url = new File(PATH).toURI().toURL();
             var dossierWrapper = mapper.readValue(url, DossierWrapper.class);
@@ -60,6 +61,24 @@ public class DossierDAOImpl implements DossierDAO {
             fileOutputStream.write(mapper.writeValueAsBytes(dossierWrapper));
         } catch (IOException e) {
             throw new DAOException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(Dossier dossier) throws DAOException {
+        try (var fileInputStream = new FileInputStream(PATH);
+            var fileOutputStream = new FileOutputStream(PATH)) {
+
+            var mapper = new XmlMapper();
+            var xmlString = new String(fileInputStream.readAllBytes());
+            var dossiers = mapper.readValue(xmlString, DossierWrapper.class).getDossiers();
+
+            dossiers.removeIf(d -> d.getCardNum().equals(dossier.getCardNum()));
+            dossiers.add(dossier);
+
+            fileOutputStream.write(mapper.writeValueAsBytes(new DossierWrapper(dossiers)));
+        } catch (IOException e) {
+            throw new DAOException(e);
         }
     }
 }

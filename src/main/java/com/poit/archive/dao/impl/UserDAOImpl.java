@@ -5,8 +5,11 @@ import com.poit.archive.criteria.Criteria;
 import com.poit.archive.dao.UserDAO;
 import com.poit.archive.dao.wrapper.UserWrapper;
 import com.poit.archive.dao.exception.DAOException;
+import com.poit.archive.entity.Role;
 import com.poit.archive.entity.User;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,5 +48,4 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException(e);
         }
     }
-
 }

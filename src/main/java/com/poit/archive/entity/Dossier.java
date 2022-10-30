@@ -3,6 +3,7 @@ package com.poit.archive.entity;
 import java.util.Objects;
 
 public class Dossier {
+
     private String cardNum;
     private String faculty;
     private String specialty;
@@ -94,4 +95,14 @@ public class Dossier {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Dossier{" +
+            "cardNum='" + cardNum + '\'' +
+            ", faculty='" + faculty + '\'' +
+            ", specialty='" + specialty + '\'' +
+            ", name='" + name + '\'' +
+            ", surname='" + surname + '\'' +
+            '}';
+    }
 }

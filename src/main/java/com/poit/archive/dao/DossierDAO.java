@@ -6,6 +6,9 @@ import com.poit.archive.entity.Dossier;
 import java.util.List;
 
 public interface DossierDAO {
-
     List<Dossier> find(Criteria criteria) throws DAOException;
+
+    void save(Dossier dossier) throws DAOException;
+
+    void update(Dossier dossier) throws DAOException;
 }

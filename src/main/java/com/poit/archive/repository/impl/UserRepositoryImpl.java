@@ -16,7 +16,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findByLogin(String login) {
         var criteria = new Criteria();
-        criteria.add("login", login);
+        criteria.add("name", login);
         try {
             return userDAO.find(criteria).get(0);
         } catch (DAOException e) {

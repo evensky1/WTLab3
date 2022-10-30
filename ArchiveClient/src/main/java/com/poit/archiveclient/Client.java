@@ -2,6 +2,7 @@ package com.poit.archiveclient;
 
 import java.io.*;
 import java.net.ConnectException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -37,14 +38,11 @@ public class Client {
         System.out.println("Enter your password: ");
         String password = scanner.nextLine();
 
-        System.out.println("Enter your host name: ");
-        String hostName = scanner.nextLine();
-
         System.out.println("Enter port");
         int port = scanner.nextInt();
 
         try {
-            var socket = new Socket(hostName, port);
+            var socket = new Socket(InetAddress.getLocalHost(), port);
             var client = new Client(socket, username, password);
             client.listenForMessage();
             client.sendMessage();

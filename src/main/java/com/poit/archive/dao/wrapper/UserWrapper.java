@@ -1,6 +1,7 @@
 package com.poit.archive.dao.wrapper;
 
 import com.poit.archive.entity.User;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserWrapper {
@@ -11,6 +12,7 @@ public class UserWrapper {
     }
 
     public UserWrapper() {
+        this.users = new ArrayList<>();
     }
 
     public void setUsers(List<User> users) {
